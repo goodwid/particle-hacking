@@ -6,3 +6,5 @@ You'll need to add env variables for your particle account username and password
 
     PARTICLE_USERNAME=email@address.com  
     PARTICLE_PASSWORD=password  
+
+then run npm start
