@@ -9,15 +9,25 @@ particle.login({username: process.env.PARTICLE_USERNAME, password:process.env.PA
     return particle.listDevices({auth: token});
   })
   .then(devices => {
+    console.log('Device List completed: ', devices);
     const photon = devices.body[0];
     return particle.getDevice({
       deviceId: photon.id,
       auth: token
     });
   })
+  .then(device => {
+    console.log('getDevice completed: ', device);
+    let deviceId = device.body.id;
+    console.log(deviceId);
+    // toggle comments on these to turn the onboard LED on the D7 pin on and off.
+    return particle.callFunction({deviceId, name: 'digitalwrite', argument: 'D7:HIGH', auth: token});
+    //return particle.callFunction({deviceId, name: 'digitalwrite', argument: 'D7:LOW', auth: token});
+
+  })
   .then(data => {
-    console.log('data: ', data);
+    console.log('Successful: ', data);
   })
   .catch(err => {
-    console.log('list devices failed:', err);
+    console.log('Error:', err);
   });
